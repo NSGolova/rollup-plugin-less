@@ -58,7 +58,8 @@ export default function plugin(options = {}) {
             try {
                 options.option = options.option || {};
                 options.option['filename'] = id;
-                options.output = options.output === undefined || options.output === true ? 'rollup.build.css' : options.output;
+                
+                const outputFile = options.output === undefined || options.output === true ? 'rollup.build.css' : options.output;
                 if (options.plugins) {
                     options.option['plugins'] = options.plugins
                 }
@@ -66,15 +67,15 @@ export default function plugin(options = {}) {
                 let css = await renderSync(code, options.option);
 
                 if (options.output && isFunc(options.output)) {
-                    css = await options.output(css, id);
+                    outputFile = await options.output(css, id);
                 }
 
-                if (options.output && isString(options.output)) {
+                if (outputFile && isString(outputFile)) {
                     if (fileCount == 1) {
                         //clean the output file
-                        fs.removeSync(options.output);
+                        fs.removeSync(outputFile);
                     }
-                    await appendToFile(options.output, css);
+                    await appendToFile(outputFile, css);
                 }
 
                 let exportCode = '';
