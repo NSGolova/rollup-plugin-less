@@ -59,7 +59,7 @@ export default function plugin(options = {}) {
                 options.option = options.option || {};
                 options.option['filename'] = id;
                 
-                const outputFile = options.output === undefined || options.output === true ? 'rollup.build.css' : options.output;
+                var outputFile = options.output === undefined || options.output === true ? 'rollup.build.css' : options.output;
                 if (options.plugins) {
                     options.option['plugins'] = options.plugins
                 }
